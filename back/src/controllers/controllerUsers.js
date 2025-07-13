@@ -1,20 +1,38 @@
 import bcrypt from "bcryptjs"; // Encriptacion de contraseña
 import modelUsers from "../models/modelUsers.js"; // Controlar el esquema de usuarios o hacer uso del esquema
 import crypto from 'crypto';
-// import nodemailer from 'nodemailer';
+import nodemailer from 'nodemailer';
 import { model } from "mongoose";
 import { text } from "stream/consumers";
 
 const controllerUsers = {
     createUser: async(solicitud , respuesta)=> {
         try {
-            const {name, email, password} = solicitud.body;
+            const {nombre, correo, contrasena, imagenPerfil, bio, ubicacion, habilidades, profesion, precioServicioHora, linksRedes} = solicitud.body;
             console.log(solicitud.body);
-            const passwordProtected = await bcrypt.hash(password, 10);
+            
+            // Validar si el usuario ya esta registrado
+            const existingUser = await modelUsers.findOne({correo});
+            if (existingUser) {
+                return respuesta.status(400).json({
+                    result: 'Error',
+                    message: 'El correo electronico ya esta registrado',
+                    data: null,
+                });
+            }
+
+            const passwordProtected = await bcrypt.hash(contrasena, 10);
             const newUser = new modelUsers({
-                name,
-                email,
-                password: passwordProtected,
+                nombre,
+                correo,
+                contrasena: passwordProtected,
+                imagenPerfil,
+                bio,
+                ubicacion,
+                habilidades,
+                profesion,
+                precioServicioHora,
+                linksRedes,
             });
             console.log(newUser);
 
@@ -125,8 +143,8 @@ function generarContrasenaAleatoria() {
 
 export const forgotPassword = async (solicitud, respuesta) => {
     try {
-        const { email } = solicitud.body
-        const user = await modelUsers.findOne({email});
+        const { correo } = solicitud.body
+        const user = await modelUsers.findOne({correo});
         if (!user) {
             return respuesta.status(404).json({
                 message: "No se encontro el correo registrado en la Base de Datos"
@@ -150,9 +168,9 @@ export const forgotPassword = async (solicitud, respuesta) => {
         // contenido del correo
         const mailOptions ={
             from: 'shermangnr@gmail.com',
-            to: email,
+            to: correo,
             subject: 'Recuperación de contraseña',
-            text: `Hola! ${user.name}, \n\Tu nueva contraseña es: ${nuevaPassword} \n\ Recuerda actualizar tu contraseña en tu perfil por seguridad. \n\ ¡Saludos desde el area de soporte!`
+            text: `Hola! ${user.nombre}, \n\Tu nueva contraseña es: ${nuevaPassword} \n\ Recuerda actualizar tu contraseña en tu perfil por seguridad. \n\ ¡Saludos desde el area de soporte!`
         }
 
         // Envio de correo
