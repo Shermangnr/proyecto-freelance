@@ -7,8 +7,53 @@ import { error } from "console";
 
 const controllerServices = {
     //Crear un nuevo servicio (añadir)
+    // crearServicio: async(solicitud, respuesta)=> {
+    //     try {
+    //         uploadSingleImage(solicitud, respuesta, async(error)=>{
+    //             if (error) {
+    //                 respuesta.json({
+    //                     result: 'Error',
+    //                     message: 'Un error ha ocurrido mientras se cargaba la imagen',
+    //                     data: error,
+    //                 });
+    //             }
+    //             const nuevoServicio = new modelServices({
+    //                 titulo: solicitud.body.titulo,
+    //                 descripcion: solicitud.body.descripcion,
+    //                 precio: solicitud.body.precio,
+    //                 categoria: solicitud.body.categoria,
+    //                 etiquetas: solicitud.body.etiquetas,
+    //                 imagenes: solicitud.file ? [solicitud.file.filename] : [],
+    //                 usuarioId: solicitud.body.usuarioId,
+    //             });
+    //             const savedServices = await nuevoServicio.save();
+    //             respuesta.json({
+    //                 result: 'Ok',
+    //                 message: 'El servicio se ha creado exitosamente',
+    //                 data: savedServices._id
+    //             });
+    //         });
+    //     } catch (error) {
+    //         respuesta.json({
+    //             result: 'Error',
+    //             message: 'Un error ha ocurrido mientras se creaba el servicio'
+    //         });
+    //     }
+    // },
+
+
     crearServicio: async(solicitud, respuesta)=> {
         try {
+            console.log('Controlador crearServicio: solicitud.user al inicio:', solicitud.user);
+            const userId = solicitud.user.id; // <-- ¡OBTÉN EL ID DEL USUARIO DEL TOKEN AUTENTICADO!
+
+            if (!userId) { // Una pequeña verificación de seguridad adicional
+                return respuesta.status(401).json({
+                    result: 'Error',
+                    message: 'No autorizado: ID de usuario no disponible en la solicitud autenticada.',
+                });
+            }
+
             uploadSingleImage(solicitud, respuesta, async(error)=>{
                 if (error) {
                     respuesta.json({
@@ -24,7 +69,7 @@ const controllerServices = {
                     categoria: solicitud.body.categoria,
                     etiquetas: solicitud.body.etiquetas,
                     imagenes: solicitud.file ? [solicitud.file.filename] : [],
-                    usuarioId: solicitud.body.usuarioId,
+                    usuarioId: userId, // <-- ¡USA EL userId OBTENIDO DEL TOKEN AQUÍ!
                 });
                 const savedServices = await nuevoServicio.save();
                 respuesta.json({
@@ -34,14 +79,16 @@ const controllerServices = {
                 });
             });
         } catch (error) {
-            respuesta.json({
+            console.error('Error al crear servicio:', error); // Para depuración
+            respuesta.status(500).json({ // 500 Internal Server Error
                 result: 'Error',
-                message: 'Un error ha ocurrido mientras se creaba el servicio'
+                message: 'Un error ha ocurrido mientras se creaba el servicio',
+                data: error.message, // Mensaje de error para depuración
             });
         }
     },
 
-    //Leer un servicio por ID
+    // Leer un servicio por ID
     leerServicio: async(solicitud, respuesta)=> {
         try {
             const serviceFound = await modelServices.findById(solicitud.params.id);
@@ -74,6 +121,41 @@ const controllerServices = {
                 result: 'Error',
                 message: 'Un error ha ocurrido mientras se buscaban todos los usuarios',
                 data: error,
+            });
+        }
+    },
+
+    /**
+     * @description Lee los servicios creados por el usuario autenticado.
+     * @route GET /api/services/read-my-services
+     * @access Private (requiere autenticación)
+     */
+    leerMisServicios: async (solicitud, respuesta) => {
+        try {
+            // **IMPORTANTE**: 'solicitud.user.id' proviene de tu middleware de autenticación
+            // que decodifica el token JWT y adjunta el ID del usuario a la solicitud.
+            const userId = solicitud.user.id;
+
+            if (!userId) {
+                return respuesta.status(401).json({
+                    result: 'Error',
+                    message: 'No autorizado: ID de usuario no proporcionado en la solicitud.',
+                });
+            }
+
+            const myServices = await modelServices.find({ usuarioId: userId });
+
+            respuesta.json({
+                result: 'Ok',
+                message: 'Servicios del usuario encontrados exitosamente.',
+                data: myServices,
+            });
+        } catch (error) {
+            console.error('Error al leer los servicios del usuario:', error);
+            respuesta.status(500).json({
+                result: 'Error',
+                message: 'Ha ocurrido un error al buscar tus servicios.',
+                data: error.message, // Proporciona el mensaje del error para depuración
             });
         }
     },

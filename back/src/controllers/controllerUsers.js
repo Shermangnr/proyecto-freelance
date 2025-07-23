@@ -16,7 +16,7 @@ const controllerUsers = {
             if (existingUser) {
                 return respuesta.status(400).json({
                     result: 'Error',
-                    message: 'El correo electronico ya esta registrado',
+                    message: 'Este correo ya se encuentra registrado. Por favor, inicia sesión o usa otro correo.',
                     data: null,
                 });
             }

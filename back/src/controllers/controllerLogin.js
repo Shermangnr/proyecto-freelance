@@ -5,10 +5,21 @@ import modelUsers from "../models/modelUsers.js";
 const controllerLogin = {
     iniciarSesion: async(solicitud, respuesta)=>{
         try {
-            const {username, contrasena}= solicitud.body;
+            const {correo, contrasena}= solicitud.body;
+
+            const correoNormalizado = correo.toLowerCase().trim();
+
             const userFound = await modelUsers.findOne({
-                correo: username,
+                correo: correoNormalizado,
             });
+
+            if (!userFound) {
+                return respuesta.status(400).json({ // Status 400 Bad Request es apropiado aquí
+                    result: "Error",
+                    message: "Correo no encontrado o no está registrado.",
+                    data: null,
+                });
+            }
 
             const contrasenaValidada = await bcrypt.compare(
                 contrasena, //Este es el que ingresa el usuario cuando se loguea
@@ -17,7 +28,7 @@ const controllerLogin = {
 
             if (contrasenaValidada) {
                 const token = await generarToken({
-                    id: userFound._id,
+                    id: userFound._id.toString(),
                     nombre: userFound.nombre
                 });
 
