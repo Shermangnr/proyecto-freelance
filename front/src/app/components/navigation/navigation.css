@@ -1,0 +1,97 @@
+/* Contenedor principal de la barra lateral */
+#mainSidebar {
+    background-color: #0f2c4d; /* Tu color de fondo */
+    color: #fff; /* Color del texto para contrastar con el fondo */
+    width: 250px; /* Ancho fijo para el sidebar */
+    position: fixed; /* Lo fija a la izquierda de la ventana */
+    height: 100vh; /* Ocupa el 100% de la altura de la ventana */
+    top: 0;
+    left: 0;
+    padding-top: 20px; /* Espaciado interno superior */
+    transition: all 0.3s; /* Animación suave para futuras interacciones */
+    z-index: 1000; /* Asegura que esté por encima de otros elementos */
+    display: flex; /* Usamos flexbox para el diseño interno del sidebar */
+    flex-direction: column; /* Apila los elementos verticalmente */
+}
+
+/* Encabezado de la barra lateral (logo y título) */
+#mainSidebar .sidebar-header {
+    padding: 20px;
+    background-color: rgba(0, 0, 0, 0.1); /* Un ligero fondo para el encabezado */
+    text-align: center;
+}
+
+#mainSidebar .sidebar-header .logo-placeholder {
+    margin-bottom: 15px; /* Espacio debajo del logo */
+}
+
+#mainSidebar .sidebar-header .logo-placeholder img {
+    max-width: 100px; /* Tamaño máximo para tu logo, ajústalo si es necesario */
+    height: auto;
+}
+
+/* Lista de componentes/enlaces */
+#mainSidebar ul.components {
+    padding: 20px 0;
+    flex-grow: 1; /* Esto hace que la lista de enlaces ocupe el espacio restante */
+    overflow-y: auto; /* Permite scroll si hay muchos enlaces */
+    list-style: none; /* Quita los puntos de la lista */
+    margin: 0; /* Asegura que no haya márgenes por defecto */
+}
+
+/* Estilos de los enlaces individuales */
+#mainSidebar ul li a {
+    padding: 10px 20px;
+    font-size: 1.1em;
+    display: block;
+    color: #fff; /* Color de los enlaces */
+    text-decoration: none; /* Quitar subrayado por defecto */
+    transition: all 0.3s;
+    white-space: nowrap; /* Evita que el texto se rompa en varias líneas */
+    overflow: hidden; /* Oculta el texto que desborda */
+    text-overflow: ellipsis; /* Añade puntos suspensivos si el texto es muy largo */
+}
+
+/* Estilo al pasar el ratón (hover) sobre los enlaces */
+#mainSidebar ul li a:hover {
+    color: #0f2c4d; /* Color de texto al pasar el ratón */
+    background: #fff; /* Fondo al pasar el ratón */
+}
+
+/* 🚨 Estilos para el elemento activo 🚨 */
+
+/* Cuando el LI padre tiene la clase 'active' y su enlace directo */
+#mainSidebar ul li.active > a {
+    color: #0f2c4d; /* Color de texto para la opción activa */
+    background: #fff; /* Fondo para la opción activa */
+    font-weight: bold; /* Texto en negrita para resaltar */
+    border-left: 5px solid #ffc107; /* Una barra lateral amarilla para mayor énfasis */
+    padding-left: 15px; /* Ajusta el padding para compensar el borde izquierdo */
+}
+
+/* Cuando el propio A tiene la clase 'active' (comúnmente aplicado por routerLinkActive) */
+#mainSidebar ul li a.active {
+    color: #0f2c4d; /* Mismo color de texto activo */
+    background: #fff; /* Mismo fondo activo */
+    font-weight: bold; /* Mismo texto en negrita */
+    border-left: 5px solid #ffc107; /* Mismo borde lateral */
+    padding-left: 15px; /* Ajusta el padding para compensar el borde izquierdo */
+}
+
+/* Mantener la consistencia en el hover cuando un elemento ya está activo */
+#mainSidebar ul li.active > a:hover,
+#mainSidebar ul li a.active:hover {
+    color: #0f2c4d; /* Mismo color de texto activo */
+    background: #fff; /* Mismo fondo activo */
+    cursor: default; /* Cambia el cursor para indicar que no es necesario hacer clic de nuevo */
+}
+
+/* Pie de página de la barra lateral */
+.sidebar-footer {
+    padding: 20px;
+    text-align: center;
+    font-size: 0.8em;
+    color: rgba(255, 255, 255, 0.7); /* Un color de texto más suave para el copyright */
+    border-top: 1px solid rgba(255, 255, 255, 0.1); /* Línea divisoria */
+    margin-top: auto; /* Empuja el footer a la parte inferior de la sidebar */
+}

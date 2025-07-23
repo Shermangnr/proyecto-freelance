@@ -1,1 +1,62 @@
-<p>login works!</p>
+<div class="login-container d-flex justify-content-center align-items-center">
+    <div class="card login-card shadow-lg">
+        <div class="card-body p-5">
+            <h2 class="card-title text-center mb-4 text-primary">Iniciar Sesión en NexusJob</h2>
+            <p class="text-center text-muted mb-4">¡Conéctate con el mundo freelance!</p>
+
+            <div *ngIf="showSendingAlert" class="alert alert-info text-center mb-4" role="alert">
+                Iniciando sesión... Por favor, espera.
+            </div>
+
+            <div *ngIf="showWelcomeAlert" class="alert alert-success text-center mb-4" role="alert">
+                ¡Bienvenido <b>{{userName}}</b> a NexusJob! Redirigiendo...
+            </div>
+
+            <div *ngIf="showErrorAlert" class="alert alert-danger text-center mb-4" role="alert">
+                {{ errorMessage }}
+            </div>
+
+            <form [formGroup]="loginForm" (ngSubmit)="handleSubmit()">
+
+                <div class="mb-3">
+                    <label for="usernameInput" class="form-label">Correo Electrónico o Nombre de Usuario</label>
+                    <input type="text" id="usernameInput" class="form-control"
+                        placeholder="ejemplo@correo.com o tu_usuario" formControlName="correo" required>
+                    <div *ngIf="loginForm.get('correo')?.invalid && loginForm.get('correo')?.touched"
+                        class="text-danger mt-1">
+                        <div *ngIf="loginForm.get('correo')?.errors?.['required']">El nombre de usuario/email es
+                            requerido.</div>
+                    </div>
+                </div>
+
+                <div class="mb-4">
+                    <label for="passwordInput" class="form-label">Contraseña</label>
+                    <input type="password" id="passwordInput" class="form-control" placeholder="Ingresa tu contraseña"
+                        formControlName="contrasena" required>
+                    <div *ngIf="loginForm.get('contrasena')?.invalid && loginForm.get('contrasena')?.touched"
+                        class="text-danger mt-1">
+                        <div *ngIf="loginForm.get('contrasena')?.errors?.['required']">La contraseña es requerida.
+                        </div>
+                        <div *ngIf="loginForm.get('contrasena')?.errors?.['minlength']">La contraseña debe tener al
+                            menos 6 caracteres.</div>
+                    </div>
+                </div>
+
+                <button type="submit" class="btn btn-primary w-100 mb-3" [disabled]="loginForm.invalid || showSendingAlert">
+                    Iniciar Sesión
+                </button>
+
+                <div class="text-center">
+                    <a [routerLink]="['/recover']" class="text-decoration-none text-secondary forgot-password-link">
+                        ¿Olvidaste tu contraseña?
+                    </a>
+                </div>
+                <div class="text-center mt-3">
+                    <p class="mb-0 text-muted">¿Nuevo en NexusJob? <a [routerLink]="['/register']"
+                            class="text-decoration-none text-primary register-link">Regístrate aquí</a></p>
+                </div>
+
+            </form>
+        </div>
+    </div>
+</div>

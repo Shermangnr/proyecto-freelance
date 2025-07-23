@@ -1,0 +1,141 @@
+/* Estilos para el contenedor principal de MyServices */
+.my-services-container {
+    padding: 20px;
+    background-color: #f8f9fa;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    margin: 20px; /* Asegura un margen si el contenedor padre no lo tiene */
+}
+
+h2 {
+    color: #0f2c4d;
+    margin-bottom: 15px;
+    text-align: center; /* Centra el título para ambas secciones */
+}
+
+p {
+    text-align: center;
+    margin-bottom: 20px;
+    color: #555;
+}
+
+/* Estilos para botones generales */
+.btn-primary {
+    background-color: #007bff;
+    border-color: #007bff;
+    display: block; /* Hace que el botón ocupe todo el ancho disponible */
+    margin: 0 auto 20px auto; /* Centra el botón */
+    max-width: 250px; /* Limita el ancho del botón */
+}
+
+.btn-primary:hover {
+    background-color: #0056b3;
+    border-color: #0056b3;
+}
+
+/* Estilos para la lista de servicios (cards) */
+.my-service-card {
+    border: 1px solid #dee2e6;
+    border-radius: 6px;
+    overflow: hidden; /* Para que las imágenes no se salgan del borde */
+}
+
+.my-service-card .service-image {
+    width: 100%;
+    height: 200px; /* Altura fija para las imágenes */
+    object-fit: cover; /* Recorta la imagen para que llene el espacio */
+}
+
+.my-service-card .card-body {
+    padding: 15px;
+}
+
+.my-service-card .card-title {
+    color: #343a40;
+    font-size: 1.25em;
+    margin-bottom: 10px;
+}
+
+.my-service-card .card-text {
+    color: #6c757d;
+    font-size: 0.9em;
+    margin-bottom: 15px;
+}
+
+.my-service-card .list-unstyled {
+    margin-bottom: 10px;
+}
+
+.my-service-card .list-unstyled li {
+    font-size: 0.9em;
+    margin-bottom: 5px;
+}
+
+.my-service-card .badge {
+    font-size: 0.75em;
+}
+
+.my-service-card .btn {
+    font-size: 0.85em;
+}
+
+/* Estilos para el formulario de creación */
+.create-service-form-section {
+    max-width: 700px; /* Limita el ancho del formulario */
+    margin-left: auto;
+    margin-right: auto;
+    padding: 20px;
+    background-color: #ffffff; /* Un fondo diferente para el formulario */
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+}
+
+.form-label {
+    font-weight: bold;
+    color: #343a40;
+}
+
+.form-control, .form-select {
+    border-radius: 5px;
+    border: 1px solid #ced4da;
+    padding: 10px;
+}
+
+.form-control:focus, .form-select:focus {
+    border-color: #007bff;
+    box-shadow: 0 0 0 0.25rem rgba(0, 123, 255, 0.25);
+}
+
+.text-danger {
+    font-size: 0.85em;
+    margin-top: 5px;
+}
+
+.btn-success {
+    background-color: #28a745;
+    border-color: #28a745;
+}
+
+.btn-success:hover {
+    background-color: #218838;
+    border-color: #1e7e34;
+}
+
+.btn-secondary {
+    background-color: #6c757d;
+    border-color: #6c757d;
+}
+
+.btn-secondary:hover {
+    background-color: #5a6268;
+    border-color: #545b62;
+}
+
+.alert {
+    border-radius: 5px;
+}
+
+/* Optional: Add some spacing for the icon if you use Bootstrap Icons */
+.bi {
+    margin-right: 5px;
+}

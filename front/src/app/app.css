@@ -1,0 +1,28 @@
+.content {
+    margin-left: 250px;
+    /* Igual al ancho de tu sidebar fijo */
+    padding: 20px;
+    /* Añade un padding para que el contenido no esté pegado al borde */
+    /* Puedes añadir un min-height si quieres que el fondo ocupe toda la altura visible */
+    min-height: 100vh;
+    /* Ocupa al menos el 100% de la altura de la ventana */
+    box-sizing: border-box;
+    /* Asegura que el padding no añada al ancho/alto total */
+}
+
+/* Opcional: Para mejorar la responsividad en pantallas pequeñas */
+@media (max-width: 768px) {
+    .content {
+        margin-left: 0;
+        /* En pantallas pequeñas, el sidebar podría ocultarse o superponerse */
+    }
+
+    /* Si quieres que el sidebar se oculte en pantallas pequeñas */
+    #mainSidebar {
+        width: 0;
+        /* Oculta el sidebar */
+        overflow-x: hidden;
+        /* Evita barras de desplazamiento */
+        /* Puedes añadir un botón para mostrarlo */
+    }
+}

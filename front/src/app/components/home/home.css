@@ -1,0 +1,68 @@
+.home-container {
+    color: #333;
+    /* Color de texto general */
+    padding: 20px;
+    /* Espaciado general del contenedor */
+}
+
+.welcome-section {
+    background-color: #0f2c4d;
+    color: #fff;
+    border-radius: 8px;
+    margin-bottom: 40px;
+}
+
+.welcome-section .btn-primary {
+    background-color: #28a745;
+    /* Un verde para el botón principal */
+    border-color: #28a745;
+    transition: background-color 0.3s ease, border-color 0.3s ease;
+}
+
+.welcome-section .btn-primary:hover {
+    background-color: #218838;
+    border-color: #1e7e34;
+}
+
+.welcome-section .btn-outline-light {
+    border-color: #fff;
+    color: #fff;
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.welcome-section .btn-outline-light:hover {
+    background-color: #fff;
+    color: #0f2c4d;
+    /* Color del texto al pasar el ratón */
+}
+
+.features-section {
+    background-color: #f8f9fa;
+    /* Un fondo claro para las características */
+    padding: 40px 0;
+    border-radius: 8px;
+}
+
+.features-section h2 {
+    color: #0f2c4d;
+    /* Color del título de características */
+}
+
+.feature-icon {
+    font-size: 3rem;
+    /* Tamaño de los iconos */
+    color: #0f2c4d;
+    /* Color de los iconos */
+}
+
+.card {
+    border: none;
+    /* Quitar borde por defecto de la tarjeta */
+    transition: transform 0.2s ease-in-out;
+    /* Efecto hover */
+}
+
+.card:hover {
+    transform: translateY(-5px);
+    /* Pequeño levantamiento al pasar el ratón */
+}

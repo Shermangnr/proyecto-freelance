@@ -1,1 +1,82 @@
-<p>register works!</p>
+<div class="register-container d-flex justify-content-center align-items-center">
+    <div class="card register-card shadow-lg">
+        <div class="card-body p-5">
+            <h2 class="card-title text-center mb-4 text-primary">Regístrate en NexusJob</h2>
+            <p class="text-center text-muted mb-4">Crea tu cuenta y empieza a ofrecer tus servicios.</p>
+
+            <!-- Mensajes de confirmacion en el front para el usuario -->
+            <div *ngIf="showSendingAlert" class="alert alert-info text-center mb-4" role="alert">
+                Enviando tus datos para registro... Por favor, espera.
+            </div>
+
+            <div *ngIf="showSuccessAlert" class="alert alert-success text-center mb-4" role="alert">
+                ¡Te has registrado con éxito en NexusJob! Redirigiendo al inicio de sesión...
+            </div>
+
+            <div *ngIf="showErrorAlert" class="alert alert-danger text-center mb-4" role="alert">
+                {{ errorMessage }}
+            </div>
+
+            <form [formGroup]="registerForm" (ngSubmit)="handleSubmit()">
+
+                <div class="mb-3">
+                    <label for="nombreInput" class="form-label">Nombre Completo</label>
+                    <input type="text" id="nombreInput" class="form-control" placeholder="Tu nombre y apellido"
+                        formControlName="nombre" required>
+                    <div *ngIf="registerForm.get('nombre')?.invalid && registerForm.get('nombre')?.touched"
+                        class="text-danger mt-1">
+                        <div *ngIf="registerForm.get('nombre')?.errors?.['required']">El nombre es requerido.</div>
+                    </div>
+                </div>
+
+                <div class="mb-3">
+                    <label for="correoInput" class="form-label">Correo Electrónico</label>
+                    <input type="email" id="correoInput" class="form-control" placeholder="ejemplo@correo.com"
+                        formControlName="correo" required>
+                    <div *ngIf="registerForm.get('correo')?.invalid && registerForm.get('correo')?.touched"
+                        class="text-danger mt-1">
+                        <div *ngIf="registerForm.get('correo')?.errors?.['required']">El correo es requerido.</div>
+                        <div *ngIf="registerForm.get('correo')?.errors?.['email']">El formato del correo es inválido.
+                        </div>
+                    </div>
+                </div>
+
+                <div class="mb-4">
+                    <label for="contrasenaInput" class="form-label">Contraseña</label>
+                    <input type="password" id="contrasenaInput" class="form-control"
+                        placeholder="Crea una contraseña segura" formControlName="contrasena" required>
+                    <div *ngIf="registerForm.get('contrasena')?.invalid && registerForm.get('contrasena')?.touched"
+                        class="text-danger mt-1">
+                        <div *ngIf="registerForm.get('contrasena')?.errors?.['required']">La contraseña es requerida.
+                        </div>
+                        <div *ngIf="registerForm.get('contrasena')?.errors?.['minlength']">La contraseña debe tener al
+                            menos 3 caracteres.</div>
+                    </div>
+                </div>
+
+                <div class="mb-4">
+                    <label for="confirmContrasenaInput" class="form-label">Confirmar Contraseña</label>
+                    <input type="password" id="confirmContrasenaInput" class="form-control"
+                        placeholder="Repite tu contraseña" formControlName="confirmContrasena" required>
+                    <div *ngIf="registerForm.get('confirmContrasena')?.invalid && registerForm.get('confirmContrasena')?.touched"
+                        class="text-danger mt-1">
+                        <div *ngIf="registerForm.get('confirmContrasena')?.errors?.['required']">La confirmación de la
+                            contraseña es requerida.</div>
+                        <div *ngIf="registerForm.get('confirmContrasena')?.errors?.['mismatch']">Las contraseñas no
+                            coinciden.</div>
+                    </div>
+                </div>
+
+                <button type="submit" class="btn btn-primary w-100 mb-3" [disabled]="registerForm.invalid">
+                    Crear Cuenta
+                </button>
+
+                <div class="text-center mt-3">
+                    <p class="mb-0 text-muted">¿Ya tienes una cuenta? <a [routerLink]="['/login']"
+                            class="text-decoration-none text-primary login-link">Inicia Sesión aquí</a></p>
+                </div>
+
+            </form>
+        </div>
+    </div>
+</div>

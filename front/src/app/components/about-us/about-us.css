@@ -1,0 +1,57 @@
+.about-us-container {
+    background-color: #f8f9fa;
+    /* Un fondo claro y agradable */
+}
+
+.about-section {
+    background-color: #0f2c4d;
+    color: #fff;
+    border-radius: 8px;
+    margin-bottom: 40px;
+}
+
+.text-primary {
+    color: #0f2c4d !important;
+    /* Usando tu color primario */
+}
+
+.text-info {
+    color: #17a2b8 !important;
+}
+
+.text-success {
+    color: #28a745 !important;
+}
+
+.text-justify {
+    text-align: justify;
+}
+
+.display-4 {
+    font-weight: 700;
+}
+
+.lead {
+    font-size: 1.25rem;
+    font-weight: 300;
+}
+
+.bi {
+    vertical-align: -.125em;
+}
+
+.about-us-container h3 {
+    color: #343a40;
+    /* Un color oscuro para los subtítulos */
+    margin-bottom: 1rem;
+}
+
+.about-us-container p {
+    line-height: 1.7;
+    /* Mejora la legibilidad del texto */
+}
+
+.container {
+    max-width: 960px;
+    /* Limita el ancho del contenido para una mejor lectura */
+}

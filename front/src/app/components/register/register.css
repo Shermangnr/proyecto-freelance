@@ -1,0 +1,86 @@
+/* src/app/components/register/register.component.css */
+
+.register-container {
+    /* Mismos estilos de centrado que el login-container */
+    width: 100%;
+    height: 100vh;
+    /* Ajusta si tienes navbars que ocupen altura */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #f0f2f5;
+    box-sizing: border-box;
+    padding: 20px;
+}
+
+.register-card {
+    max-width: 500px;
+    /* Quizás un poco más ancho que el login si tiene más campos */
+    width: 100%;
+    border: none;
+    border-radius: 10px;
+}
+
+.card-title {
+    font-weight: bold;
+}
+
+.text-primary {
+    color: #0f2c4d !important;
+    /* Tu color principal */
+}
+
+.form-label {
+    font-weight: 500;
+    color: #555;
+}
+
+.form-control {
+    border-radius: 5px;
+    padding: 10px 15px;
+    border: 1px solid #ced4da;
+}
+
+.form-control:focus {
+    border-color: #0f2c4d;
+    box-shadow: 0 0 0 0.25rem rgba(15, 44, 77, 0.25);
+}
+
+.btn-primary {
+    background-color: #0f2c4d;
+    border-color: #0f2c4d;
+    font-weight: bold;
+    padding: 10px 0;
+    border-radius: 5px;
+    transition: background-color 0.3s ease, border-color 0.3s ease;
+}
+
+.btn-primary:hover {
+    background-color: #0c243e;
+    border-color: #0c243e;
+}
+
+.text-danger {
+    font-size: 0.875em;
+}
+
+.login-link {
+    font-weight: 500;
+    text-decoration: none;
+}
+
+.login-link:hover {
+    text-decoration: underline !important;
+}
+
+/* Media queries para responsividad */
+@media (max-width: 768px) {
+    .register-container {
+        height: auto;
+        padding: 10px;
+    }
+
+    .register-card {
+        margin: 20px;
+    }
+}
