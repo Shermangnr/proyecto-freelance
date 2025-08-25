@@ -1,1 +1,51 @@
-<p>servicios works!</p>
+<div class="container">
+    <h1>Todos los Servicios Disponibles</h1>
+
+    <div *ngIf="isLoading" class="loading-message">
+        <p>Cargando servicios...</p>
+    </div>
+
+    <div *ngIf="errorMessage" class="error-message">
+        <p>{{ errorMessage }}</p>
+    </div>
+
+    <div *ngIf="!isLoading && allServices.length > 0" class="services-grid">
+        <div *ngFor="let service of allServices" class="service-card">
+            <div class="service-image-container">
+                <img *ngIf="service.imagenes && service.imagenes.length > 0"
+                    src="http://localhost:3000/images/{{ service.imagenes[0] }}" alt="{{ service.titulo }}"
+                    class="service-image">
+                <img *ngIf="!service.imagenes || service.imagenes.length === 0"
+                    src="../../../assets/freelance.png" alt="Servicio sin imagen"
+                    class="service-image default-image">
+            </div>
+            <div class="service-details">
+                <h2>{{ service.titulo }}</h2>
+                <p class="description">{{ service.descripcion }}</p>
+                <p class="price">Precio: ${{ service.precio }} Usd / Hora</p>
+                <p class="category">Categoría: {{ service.categoria }}</p>
+                <p class="tags">Etiquetas: {{ service.etiquetas ? service.etiquetas.join(', ') : 'N/A' }}</p>
+
+                <p *ngIf="service.usuarioId?.nombre" class="provider-name">
+                    Ofrecido por: <strong>{{ service.usuarioId.nombre }}</strong>
+                </p>
+                <p *ngIf="!service.usuarioId?.nombre" class="provider-name no-provider">
+                    Proveedor desconocido
+                </p>
+
+                <div class="whatsapp-button-container">
+                    <a href="https://wa.me/573134180071?text=Hola!%20Estoy%20interesado%20en%20tu%20servicio%20de:%20{{ service.titulo }}"
+                        target="_blank" class="whatsapp-button">
+                        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/6/6b/WhatsApp.svg/1200px-WhatsApp.svg.png"
+                            alt="WhatsApp Icon">
+                        Contactar por WhatsApp
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div *ngIf="!isLoading && hasNoServices && !errorMessage" class="no-services-message">
+        <p>No se han encontrado servicios en la plataforma.</p>
+    </div>
+</div>

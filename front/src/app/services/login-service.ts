@@ -2,7 +2,7 @@ import { Injectable, inject, PLATFORM_ID } from '@angular/core';
 import { isPlatformBrowser } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
 // import { Credential } from '../interfaces/credential';
-import { Observable } from 'rxjs';
+import { Observable, tap } from 'rxjs';
 import { LoginUser } from '../interfaces/login-user';
 import { ApiResponse } from '../interfaces/api-response';
 
@@ -16,15 +16,25 @@ export class LoginService {
 
   private http = inject(HttpClient);
   private platformId = inject(PLATFORM_ID);
-  private API_URL = 'http://localhost:3000/inicio-sesion'; 
+  private API_URL = 'http://3.94.208.93:3000/inicio-sesion'; 
 
   constructor() {
     
   }
-
   
-  login(userCredentials: LoginUser): Observable<ApiResponse> {
-    return this.http.post<ApiResponse>(this.API_URL, userCredentials);
+  // login(userCredentials: LoginUser): Observable<ApiResponse> {
+  //   return this.http.post<ApiResponse>(this.API_URL, userCredentials);
+  // }
+
+  login(userCredentials: LoginUser): Observable<any>{
+    return this.http.post<any>(this.API_URL, userCredentials).pipe(tap(respuesta => {
+      if (respuesta.token && respuesta.user) {
+        localStorage.setItem('token', respuesta.token);
+        localStorage.setItem('user', JSON.stringify(respuesta.user))
+        console.log('Token guardado en localStorage:', localStorage.getItem('token'));
+      }
+    })
+  )
   }
 
   decodeToken(token: string): any {
@@ -61,6 +71,18 @@ export class LoginService {
       }
     }
     return null; 
+  }
+
+  getUserId(): string | null {
+    if (isPlatformBrowser(this.platformId)) {
+      const token = localStorage.getItem('token');
+      if (token) {
+        const decoded: any = this.decodeToken(token);
+        // Asumiendo que el token decodificado tiene una propiedad 'id' para el ID del usuario
+        return decoded && decoded.id ? decoded.id : null;
+      }
+    }
+    return null;
   }
 
   // Método para cerrar sesión

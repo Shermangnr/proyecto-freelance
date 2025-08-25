@@ -19,6 +19,9 @@ import { finalize } from 'rxjs/operators';
 })
 export class MyServices implements OnInit {
 
+  usuarioNombre: string = '';
+  usuarioId: string = '';
+
   router = inject(Router);
   serviceService = inject(ServiceService);
   loginService = inject(LoginService);
@@ -50,9 +53,30 @@ export class MyServices implements OnInit {
     });
   }
 
-  ngOnInit(): void {
-    // Solo intenta obtener el ID del usuario y cargar servicios si estamos en el navegador
-    if (isPlatformBrowser(this.platformId)) {
+  // ngOnInit(): void {
+  //   // Solo intenta obtener el ID del usuario y cargar servicios si estamos en el navegador
+  //   if (isPlatformBrowser(this.platformId)) {
+  //     this.getUserIdFromToken();
+  //     if (this.userId) {
+  //       this.loadMyServices();
+  //     } else {
+  //       this.errorMessage = 'No se pudo obtener el ID del usuario. Por favor, inicia sesión de nuevo.';
+  //       this.isLoading = false;
+  //     }
+  //   } else {
+  //     // Si no estamos en el navegador (SSR), no intentes acceder a localStorage
+  //     this.errorMessage = 'No se puede cargar el ID de usuario en este entorno (SSR).';
+  //     this.isLoading = false;
+  //   }
+  // }
+
+  ngOnInit() {
+    const usuarioGuardado = localStorage.getItem('user');
+    if (usuarioGuardado) {
+      const user = JSON.parse(usuarioGuardado);
+      this.usuarioNombre = user.nombre;
+      this.usuarioId = user._id;
+    } else if (isPlatformBrowser(this.platformId)){
       this.getUserIdFromToken();
       if (this.userId) {
         this.loadMyServices();
@@ -61,7 +85,6 @@ export class MyServices implements OnInit {
         this.isLoading = false;
       }
     } else {
-      // Si no estamos en el navegador (SSR), no intentes acceder a localStorage
       this.errorMessage = 'No se puede cargar el ID de usuario en este entorno (SSR).';
       this.isLoading = false;
     }
@@ -152,7 +175,7 @@ export class MyServices implements OnInit {
       return;
     }
 
-    if (!this.userId) {
+    if (!this.usuarioId) {
       this.formErrorMessage = 'No se pudo obtener el ID de usuario. Por favor, inicia sesión de nuevo.';
       this.isSubmittingForm = false;
       return;
@@ -174,7 +197,7 @@ export class MyServices implements OnInit {
       formData.append('imagen', this.selectedFile, this.selectedFile.name);
     }
 
-    formData.append('usuarioId', this.userId);
+    formData.append('usuarioId', this.usuarioId);
 
     this.serviceService.createService(formData).pipe(
       finalize(() => this.isSubmittingForm = false)

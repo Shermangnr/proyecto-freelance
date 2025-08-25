@@ -2,7 +2,7 @@ import { Component, OnInit, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Router, RouterModule, RouterLink } from '@angular/router';
 import { ReactiveFormsModule, FormControl, FormGroup, Validators, FormBuilder } from '@angular/forms';
-import { finalize } from 'rxjs/operators'; 
+import { finalize } from 'rxjs/operators';
 
 import { LoginUser } from '../../interfaces/login-user';
 import { ApiResponse } from '../../interfaces/api-response';
@@ -13,7 +13,7 @@ import { LoginService } from '../../services/login-service';
   selector: 'app-login',
   standalone: true,
   imports: [ReactiveFormsModule, RouterLink, RouterModule, CommonModule],
-  templateUrl: './login.html', 
+  templateUrl: './login.html',
   styleUrls: ['./login.css']
 })
 
@@ -23,7 +23,7 @@ export class Login implements OnInit {
 
   loginForm = new FormGroup({
     correo: new FormControl('', [Validators.required, Validators.email]),
-    contrasena: new FormControl('', [Validators.required, Validators.minLength(3)]) 
+    contrasena: new FormControl('', [Validators.required, Validators.minLength(3)])
   });
 
   // Variables para las alertas visuales en el frontend
@@ -33,7 +33,7 @@ export class Login implements OnInit {
   errorMessage: string = '';         // Contenido del mensaje de error
   userName: string = '';
 
-  
+
   constructor(private fb: FormBuilder) {
     // this.loginForm = this.fb.group({
     //   correo: ['', [Validators.required, Validators.email]],
@@ -45,6 +45,7 @@ export class Login implements OnInit {
     // Lógica para comprobar si el usuario ya está logueado
     if (this.loginService.isLoggedIn()) {
       const token = localStorage.getItem('token');
+      console.log('Token en ngOnInit:', token); // <-- Aquí imprimes el token
       if (token) {
         const decoded = this.loginService.decodeToken(token);
         if (decoded && decoded.nombre) {
@@ -53,10 +54,10 @@ export class Login implements OnInit {
           this.userName = 'Usuario';
         }
       }
-      this.showWelcomeAlert = true; 
+      this.showWelcomeAlert = true;
 
       setTimeout(() => {
-        this.showWelcomeAlert = false; 
+        this.showWelcomeAlert = false;
         this.router.navigateByUrl('/my-services');
       }, 1000);
 
@@ -81,8 +82,8 @@ export class Login implements OnInit {
 
       if (typeof correo === 'string' && typeof contrasena === 'string') {
         const userCredentials: LoginUser = {
-          correo, 
-          contrasena 
+          correo,
+          contrasena
         };
 
         this.loginService.login(userCredentials)
@@ -91,16 +92,16 @@ export class Login implements OnInit {
               this.showSendingAlert = false;
             })
           )
-          .subscribe(
-            (response: ApiResponse) => {
+          .subscribe({
+            next: (response: ApiResponse) => {
               if (response.result === 'Ok') {
                 console.log('Login exitoso:', response.message);
-                localStorage.setItem('token', response.data); 
+                localStorage.setItem('token', response.data.token);
 
                 // Decodificar el token para obtener el nombre del usuario
-                const decodedToken: any = this.loginService.decodeToken(response.data);
-                if (decodedToken && decodedToken.nombre) { 
-                  this.userName = decodedToken.nombre; 
+                const decodedToken: any = this.loginService.decodeToken(response.data.token);
+                if (decodedToken && decodedToken.nombre) {
+                  this.userName = decodedToken.nombre;
                   console.log('Nombre de usuario obtenido del token:', this.userName);
                 } else {
                   console.warn('El nombre de usuario no se encontró en el token decodificado.');
@@ -113,8 +114,8 @@ export class Login implements OnInit {
                   setTimeout(() => {
                     this.showWelcomeAlert = false;
                     this.router.navigateByUrl('/my-services');
-                  },3000);
-                },3000);
+                  }, 3000);
+                }, 3000);
 
                 // Opcional: Decodificar el token para obtener el rol y redirigir
                 // const decoded: any = this.loginService.decodeToken(response.data);
@@ -133,12 +134,12 @@ export class Login implements OnInit {
                 }, 2000);
               }
             },
-            (error) => {
+            error: (error) => {
               setTimeout(() => {
                 this.showErrorAlert = true;
                 console.error('Error de conexión o API en login:', error);
-  
-                if (error.status === 401) { 
+
+                if (error.status === 401) {
                   this.errorMessage = 'Correo o contraseña incorrectos.';
                 } else if (error.status === 400 && error.error && error.error.message) {
                   this.errorMessage = error.error.message;
@@ -147,12 +148,13 @@ export class Login implements OnInit {
                 }
               }, 2000);
             }
-          );
+          });
+
       }
     } else {
       console.log("Formulario inválido.");
       this.loginForm.markAllAsTouched();
-      this.showSendingAlert = false; 
+      this.showSendingAlert = false;
       this.showErrorAlert = true;
       this.errorMessage = 'Por favor, introduce un correo y contraseña válidos.';
     }

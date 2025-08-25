@@ -28,6 +28,7 @@
 #mainSidebar .sidebar-header .logo-placeholder img {
     max-width: 100px; /* Tamaño máximo para tu logo, ajústalo si es necesario */
     height: auto;
+    border-radius: 50%;
 }
 
 /* Lista de componentes/enlaces */

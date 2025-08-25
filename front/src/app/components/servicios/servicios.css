@@ -1,0 +1,154 @@
+.container {
+    max-width: 1200px;
+    margin: 20px auto;
+    padding: 20px;
+    background-color: #f9f9f9;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+h1 {
+    text-align: center;
+    color: #333;
+    margin-bottom: 30px;
+}
+
+.loading-message,
+.error-message,
+.no-services-message {
+    text-align: center;
+    padding: 20px;
+    font-size: 1.1em;
+    color: #666;
+}
+
+.error-message {
+    color: #d9534f;
+    background-color: #f2dede;
+    border: 1px solid #ebccd1;
+    border-radius: 4px;
+}
+
+.services-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 20px;
+}
+
+.service-card {
+    background-color: #fff;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    transition: transform 0.2s;
+    display: flex;
+    flex-direction: column;
+}
+
+.service-card:hover {
+    transform: translateY(-5px);
+}
+
+.service-image-container {
+    width: 100%;
+    height: 200px;
+    /* Altura fija para la imagen */
+    overflow: hidden;
+    background-color: #e0e0e0;
+    /* Fondo si no hay imagen */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.service-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    /* Asegura que la imagen cubra el contenedor */
+}
+
+.no-image {
+    color: #888;
+    font-style: italic;
+    text-align: center;
+}
+
+.service-details {
+    padding: 15px;
+    flex-grow: 1;
+    /* Permite que el contenido se expanda */
+    display: flex;
+    flex-direction: column;
+}
+
+.service-details h2 {
+    font-size: 1.4em;
+    color: #333;
+    margin-top: 0;
+    margin-bottom: 10px;
+}
+
+.service-details p {
+    font-size: 0.95em;
+    color: #555;
+    margin-bottom: 8px;
+}
+
+.service-details .description {
+    font-size: 0.9em;
+    color: #666;
+    margin-bottom: 15px;
+    flex-grow: 1;
+    /* Empuja las etiquetas y precio hacia abajo */
+}
+
+.service-details .price {
+    font-weight: bold;
+    color: #28a745;
+    font-size: 1.1em;
+}
+
+.service-details .category,
+.service-details .tags {
+    font-size: 0.85em;
+    color: #777;
+}
+
+.whatsapp-button-container {
+    margin-top: 15px;
+    text-align: center;
+}
+
+.whatsapp-button {
+    display: inline-flex;
+    /* Permite que el ícono y el texto estén en línea */
+    align-items: center;
+    /* Centra verticalmente el ícono y el texto */
+    background-color: #25D366;
+    /* Color de fondo de WhatsApp */
+    color: white;
+    padding: 10px 15px;
+    border-radius: 25px;
+    /* Bordes redondeados */
+    text-decoration: none;
+    /* Quita el subrayado del enlace */
+    font-weight: bold;
+    font-size: 0.95em;
+    transition: background-color 0.3s ease;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.whatsapp-button:hover {
+    background-color: #1DA851;
+    /* Un verde un poco más oscuro al pasar el mouse */
+}
+
+.whatsapp-button img {
+    width: 24px;
+    /* Tamaño del icono */
+    height: 24px;
+    margin-right: 8px;
+    /* Espacio entre el icono y el texto */
+}

@@ -1,9 +1,12 @@
-// src/app/interfaces/service.ts
-
 /**
  * Interfaz que representa la estructura de un documento de Servicio en tu base de datos.
  * Coincide con tu modelServices.js
  */
+
+export interface UserProvider {
+    _id: string; // El ID del usuario que ofrece el servicio
+    nombre: string; // Nombre del usuario
+}
 export interface Service {
     _id?: string; // El ID generado por MongoDB
     titulo: string;
@@ -12,7 +15,7 @@ export interface Service {
     categoria: string;
     etiquetas?: string[]; // Opcional, ya que tiene un default en el modelo
     imagenes?: string[]; // Opcional, ya que tiene un default en el modelo
-    usuarioId: string; // El ID del usuario que creó el servicio
+    usuarioId: UserProvider; // El ID del usuario que creó el servicio
     fechaCreacion?: Date; // Opcional, ya que tiene un default en el modelo
     // Otros campos que tu backend pueda devolver (ej. __v)
 }

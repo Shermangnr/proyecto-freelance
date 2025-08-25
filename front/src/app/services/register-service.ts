@@ -10,7 +10,7 @@ import { ApiResponse } from '../interfaces/api-response';
 export class RegisterService {
   private http = inject(HttpClient);
 
-  private API_URL = 'http://localhost:3000/usuarios';
+  private API_URL = 'http://3.94.208.93:3000/usuarios';
 
   constructor() {
     
