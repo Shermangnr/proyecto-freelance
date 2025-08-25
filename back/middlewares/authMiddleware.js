@@ -27,6 +27,6 @@ export const verifyToken = (req, res, next) => {
         }
         console.log('Middleware authMiddleware.js: req.user después de decodificar:', req.user);
         
-        next();
+        return next();
     });
 };

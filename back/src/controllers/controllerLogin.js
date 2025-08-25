@@ -1,6 +1,7 @@
 import bcrypt from "bcryptjs";
 import { generarToken, verificarToken } from "../helpers/funciones.js";
 import modelUsers from "../models/modelUsers.js";
+import { token } from "morgan";
 
 const controllerLogin = {
     iniciarSesion: async(solicitud, respuesta)=>{
@@ -29,16 +30,22 @@ const controllerLogin = {
             if (contrasenaValidada) {
                 const token = await generarToken({
                     id: userFound._id.toString(),
-                    nombre: userFound.nombre
+                    nombre: userFound.nombre,
                 });
+                
 
-                respuesta.json({
+                return respuesta.json({
                     result: "Ok",
                     message: "Acceso concedido",
-                    data: token,
+                    token: token,
+                    user: {
+                        _id: userFound._id,
+                        nombre: userFound.nombre,
+                        token: token
+                    }
                 });
             } else {
-                respuesta.json({
+                return respuesta.json({
                     result: "Error",
                     message: "Acceso denegado, contraseña incorrecta",
                     data: null,

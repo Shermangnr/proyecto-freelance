@@ -110,7 +110,7 @@ const controllerServices = {
     // Leer todos los servicios creados
     leerTodosServicios: async(solicitud, respuesta)=> {
         try {
-            const allServiceFound = await modelServices.find();
+            const allServiceFound = await modelServices.find().populate('usuarioId', 'nombre').lean(); // Asegúrate de que 'usuarioId' es el campo correcto en tu modelo
             respuesta.json({
                 result: 'Ok',
                 message: 'Todos los servicios se han encontrado',
@@ -132,7 +132,7 @@ const controllerServices = {
      */
     leerMisServicios: async (solicitud, respuesta) => {
         try {
-            // **IMPORTANTE**: 'solicitud.user.id' proviene de tu middleware de autenticación
+            // **IMPORTANTE**: 'solicitud.user.id' proviene del middleware de autenticación
             // que decodifica el token JWT y adjunta el ID del usuario a la solicitud.
             const userId = solicitud.user.id;
 
@@ -143,7 +143,7 @@ const controllerServices = {
                 });
             }
 
-            const myServices = await modelServices.find({ usuarioId: userId });
+            const myServices = await modelServices.find({ usuarioId: userId }).populate('usuarioId', 'nombre').lean();
 
             respuesta.json({
                 result: 'Ok',
